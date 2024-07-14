@@ -1,9 +1,12 @@
 import './App.css';
+import Navbar from './components/Navbar';
+import Signup from './components/Signup';
 
 function App() {
   return (
     <div className="App">
-      <h1>Beach Volley App V2</h1>
+      <Navbar />
+      <Signup />
     </div>
   );
 }
