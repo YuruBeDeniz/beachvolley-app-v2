@@ -3,7 +3,12 @@ import { ChangeEvent, SyntheticEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth';
 
-export default function Login() {
+type LoginPopupProps = {
+    closePopup: () => void;
+    onSignupClick: () => void;
+}
+
+export default function Login({ closePopup, onSignupClick }: LoginPopupProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,6 +30,7 @@ export default function Login() {
             verifyStoredToken();
             navigate("/");
             console.log("Login successful");
+            closePopup();
         })
         .catch(err =>{ 
           setError(err.response.data.message)
@@ -33,15 +39,16 @@ export default function Login() {
   }
 
   return (
-    <div className='flex justify-center mt-6 bg-orange-100'>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
+    <div className='flex flex-col space-y-4 bg-orange-100 p-4 rounded-lg'>
+      <form className="flex flex-col space-y-3" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
-        <input type='email' value={email} onChange={handleEmail} />
+        <input type='email' value={email} onChange={handleEmail} className="border px-2 py-1 rounded" />
         <label htmlFor="password">Password</label>
-        <input type='password' value={password} onChange={handlePassword} />
-        <button>Login</button>
+        <input type='password' value={password} onChange={handlePassword} className="border px-2 py-1 rounded" />
+        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
       </form>
-      {error && <h3>{error}</h3>}
+      {error && <h3 className="text-red-500">{error}</h3>}
+      <p>Don't you have an account? <span className="text-blue-500 cursor-pointer" onClick={onSignupClick}>Signup</span></p>
     </div>
   )
 }

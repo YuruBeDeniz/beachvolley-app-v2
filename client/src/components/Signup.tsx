@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useState, ChangeEvent, SyntheticEvent } from "react";
 
+type SignupPopupProps = {
+  onLoginClick: () => void;
+}
 
-export default function Signup() {
+export default function Signup({ onLoginClick }: SignupPopupProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,22 +26,23 @@ export default function Signup() {
   }
 
   return (
-    <div className="flex justify-center bg-slate-300">
-      <form className="flex flex-col" onSubmit={handleSubmit}>  
+    <div className="flex flex-col space-y-4 bg-slate-300 p-4 rounded-lg">
+      <form className="flex flex-col space-y-3" onSubmit={handleSubmit}>
         <label>Name</label>
-        <input value={name} type="text" onChange={handleName} />
+        <input value={name} type="text" onChange={handleName} className="border px-2 py-1 rounded" />
         <label>Email</label>
-        <input value={email} type="email" onChange={handleEmail} />
+        <input value={email} type="email" onChange={handleEmail} className="border px-2 py-1 rounded" />
         <label>Password</label>
-        <input value={password} type="password" onChange={handlePassword} />
+        <input value={password} type="password" onChange={handlePassword} className="border px-2 py-1 rounded" />
         <label>Confirm Password</label>
-        <input value={confirmPassword} type="password" onChange={handleConfirmPassword} />
-        {password === confirmPassword 
-         ? <button>Signup</button>
-         : <h3>Passwords don't match</h3>
-        }
+        <input value={confirmPassword} type="password" onChange={handleConfirmPassword} className="border px-2 py-1 rounded" />
+        <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+          Signup
+        </button>
       </form>
-      {error && <h3 className="text-red-600 text-lg">{error}</h3>}
+      {error && <h3 className="text-red-600">{error}</h3>}
+      {password !== confirmPassword && <h3>Passwords don't match</h3>}
+      <span className="text-blue-500 cursor-pointer" onClick={onLoginClick}>Go to login!</span>
     </div>
   )
 }
