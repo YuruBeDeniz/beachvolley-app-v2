@@ -23,12 +23,12 @@ export default function Signup() {
   }
 
   return (
-    <div className="container">
+    <div className="flex justify-center bg-slate-300">
       <form className="flex flex-col" onSubmit={handleSubmit}>  
         <label>Name</label>
         <input value={name} type="text" onChange={handleName} />
         <label>Email</label>
-        <input value={email} type="text" onChange={handleEmail} />
+        <input value={email} type="email" onChange={handleEmail} />
         <label>Password</label>
         <input value={password} type="password" onChange={handlePassword} />
         <label>Confirm Password</label>
@@ -38,7 +38,7 @@ export default function Signup() {
          : <h3>Passwords don't match</h3>
         }
       </form>
-      {error && <h3>{error}</h3>}
+      {error && <h3 className="text-red-600 text-lg">{error}</h3>}
     </div>
   )
 }
