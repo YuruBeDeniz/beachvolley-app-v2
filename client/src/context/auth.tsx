@@ -42,7 +42,12 @@ const AuthProviderWrapper: FC<AuthProviderWrapperProps> = ({ children }) => {
 
     if (storedToken) {
       return axios
-        .get("/api/auth/verify", { headers: { Authorization: `Bearer ${storedToken}` } })
+        .get("/api/auth/verify", {   headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+          Authorization: `Bearer ${storedToken}`
+        } })
         .then((response) => {
           const user: UserType = response.data; 
           setUser(user);
@@ -50,6 +55,7 @@ const AuthProviderWrapper: FC<AuthProviderWrapperProps> = ({ children }) => {
           setIsLoading(false);
         })
         .catch((err) => {
+          console.error("Error verifying token:", err);
           setUser(null);
           setIsLoggedIn(false);
           setIsLoading(false);

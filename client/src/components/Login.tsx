@@ -28,7 +28,7 @@ export default function Login({ closePopup, onSignupClick }: LoginPopupProps) {
             const token = response.data.authToken;
             storeToken(token);
             verifyStoredToken();
-            navigate("/");
+            navigate("/profile");
             console.log("Login successful");
             closePopup();
         })
